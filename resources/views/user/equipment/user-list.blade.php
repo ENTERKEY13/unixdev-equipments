@@ -14,7 +14,7 @@
                 searchDelay: 450,
                 dom: '<"top"f>rt<"bottom"lp><"bottom"i><"clear">',
                 ajax: {
-                    url: "{{ route('admin.unix.equipment_data') }}",
+                    url: "{{ route('user.unix.equipment_data') }}",
                     type: 'GET', // Ensure the correct method (GET or POST) is used
                     data: function(d) {
                         d._token = '{{ csrf_token() }}'; // Pass the CSRF token here
@@ -28,13 +28,9 @@
                 ],
                 columns: [
                     {
-                        data: "created_at ?? '-'",
+                        data: "created_at",
                         className: 'text-center',
-                        render: function(data)
-                        {
-                            if (!data) {
-                                return '-';
-                            }
+                        render: function(data) {
                             const date = new Date(data);
                             const options = {
                                 day: 'numeric',
@@ -44,8 +40,9 @@
                             return date.toLocaleDateString('en-US', options);
                         }
                     },
-                    { data: 'th_name', name: 'th_name', className: 'text-center' },
-                    { data: 'en_name', name: 'en_name', className: 'text-center' },
+                    { data: 'equipment_name', name: 'equipment_name', className: 'text-center' },
+                    { data: 'name', name: 'name', className: 'text-center' },
+                    { data: 'amount', name: 'amount', className: 'text-center' }
                 ]
             });
         });
@@ -57,7 +54,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="text-center">
-                    <span class="fs-4">รายการความต้องการใช้งานอุปกรณ์ออฟฟิศของพนักงาน</span>
+                    <span class="fs-4">รายการความต้องการใช้งานอุปกรณ์ออฟฟิศของ {{ Auth::user()->name }}</span>
                 </div>
             </div>
             <div class="card-body">
@@ -65,9 +62,10 @@
                     <table id="equipment-list" class="table w-100">
                         <thead>
                         <tr>
-                            <th class="text-center">วันที่เพิ่ม</th>
+                            <th class="text-center">วันที่ยื่นคำขอ</th>
                             <th class="text-center">ประเภท</th>
-                            <th class="text-center">Types</th>
+                            <th class="text-center">รายการ</th>
+                            <th class="text-center">จำนวน</th>
                         </tr>
                         </thead>
                         <tbody>

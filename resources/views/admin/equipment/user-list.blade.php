@@ -14,7 +14,7 @@
                 searchDelay: 450,
                 dom: '<"top"f>rt<"bottom"lp><"bottom"i><"clear">',
                 ajax: {
-                    url: "{{ route('admin.unix.equipment_data') }}",
+                    url: "{{ route('admin.unix.user_equipment_data') }}",
                     type: 'GET', // Ensure the correct method (GET or POST) is used
                     data: function(d) {
                         d._token = '{{ csrf_token() }}'; // Pass the CSRF token here
@@ -28,13 +28,9 @@
                 ],
                 columns: [
                     {
-                        data: "created_at ?? '-'",
+                        data: "created_at",
                         className: 'text-center',
-                        render: function(data)
-                        {
-                            if (!data) {
-                                return '-';
-                            }
+                        render: function(data) {
                             const date = new Date(data);
                             const options = {
                                 day: 'numeric',
@@ -44,9 +40,24 @@
                             return date.toLocaleDateString('en-US', options);
                         }
                     },
-                    { data: 'th_name', name: 'th_name', className: 'text-center' },
-                    { data: 'en_name', name: 'en_name', className: 'text-center' },
-                ]
+                    { data: 'user_name', name: 'user_name', className: 'text-center' },
+                    { data: 'equipment_name', name: 'equipment_name', className: 'text-center' },
+                    { data: 'name', name: 'name', className: 'text-center' },
+                    { data: 'amount', name: 'amount', className: 'text-center' },
+                    { data: 'price', name: 'price', className: 'text-center' },
+                    { data: 'allAmount', name: 'allAmount', className: 'text-center' }
+                ],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+
+                    // Calculate the total of the allAmount column
+                    var total = api.column(6).data().reduce(function (a, b) {
+                        return parseFloat(a) + parseFloat(b);
+                    }, 0);
+
+                    // Update the footer with the calculated total
+                    $(api.column(6).footer()).html(total.toFixed(2));
+                }
             });
         });
     </script>
@@ -64,16 +75,26 @@
                 <div class="table-responsive ">
                     <table id="equipment-list" class="table w-100">
                         <thead>
-                        <tr>
-                            <th class="text-center">วันที่เพิ่ม</th>
-                            <th class="text-center">ประเภท</th>
-                            <th class="text-center">Types</th>
-                        </tr>
+                            <tr>
+                                <th class="text-center">วันที่ยื่นคำขอ</th>
+                                <th class="text-center">ชื่อพนักงาน</th>
+                                <th class="text-center">ประเภท</th>
+                                <th class="text-center">รายการ</th>
+                                <th class="text-center">จำนวน</th>
+                                <th class="text-center">ราคา</th>
+                                <th class="text-center">รวม</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-header d-flex justify-content-between">
+                <span class="fs-4">รวมราคาของรายการทั้งหมด</span>
+                <span class="fs-4">{{number_format($calculate_all_amount, 2)}} บาท</span>
             </div>
         </div>
     </div>
