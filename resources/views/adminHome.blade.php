@@ -15,7 +15,7 @@
                         @endif
 
                         {{ __('You are logged in!') }}
-                        Admin Login
+                        Admin Login <a href="{{url(route('admin.unix.equipment'))}}">Equipments</a>
                     </div>
                 </div>
             </div>
