@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Equipments;
 use App\Models\EquipmentTypes;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -47,6 +49,7 @@ class AdminEquipmentController extends Controller
     {
         try {
             $query = EquipmentTypes::query()
+                ->orderBy('id')
                 ->select(['id', 'th_name', 'en_name']);
 
             $data = $query->get()->map(function ($item) {
@@ -141,5 +144,33 @@ class AdminEquipmentController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
+    }
+
+    public function equipment_list_edit(Request $request, $id): \Illuminate\Contracts\View\Factory|View|Application
+    {
+        $equipment = EquipmentTypes::find($id);
+        return view('admin.equipment.form', compact('equipment'));
+    }
+
+    public function equipment_list_update(Request $request, $id): JsonResponse
+    {
+        $validated = $request->validate([
+            'th_name' => 'required',
+            'en_name' => 'required',
+        ]);
+
+        $equipment = EquipmentTypes::findOrFail($id);
+        $equipment->update($validated);
+
+        return response()->json(['status' => 'success']);
+    }
+    // EquipmentController.php
+
+    public function equipment_destroy($id): JsonResponse
+    {
+        $equipment = EquipmentTypes::findOrFail($id);
+        $equipment->delete();
+
+        return response()->json(['success' => true]);
     }
 }

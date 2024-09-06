@@ -45,4 +45,7 @@ Route::prefix('admin/unix')->as('admin.unix.')->group(function () {
     Route::get('/equipment-data', [AdminEquipmentController::class, 'equipment_data'])->name('equipment_data');
     Route::get('/user-equipment-list', [AdminEquipmentController::class, 'user_equipment_list'])->name('user_equipment_list');
     Route::get('/user-equipment-data', [AdminEquipmentController::class, 'user_equipment_data'])->name('user_equipment_data');
+    Route::get('/equipment-list-edit/{id}', [AdminEquipmentController::class, 'equipment_list_edit'])->name('equipment_list_edit');
+    Route::put('/equipment-list-update/{id}', [AdminEquipmentController::class, 'equipment_list_update'])->name('equipment_list_update');
+    Route::delete('/equipment-list-delete/{id}', [AdminEquipmentController::class, 'equipment_destroy'])->name('equipment_destroy');
 });
