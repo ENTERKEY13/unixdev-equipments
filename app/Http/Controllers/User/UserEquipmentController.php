@@ -71,17 +71,31 @@ class UserEquipmentController extends Controller
     public function search_equipments(Request $request): JsonResponse
     {
         $searchString = strtolower($request->get('s', ''));
+        $userID = auth()->id();
+
+        $excludedEquipmentTypeIds = Equipments::query()
+            ->where('user_id', $userID)
+            ->pluck('equipment_type_id')
+            ->toArray();
 
         return response()->json([
             'equipments' => EquipmentTypes::query()
+                ->leftJoin('equipments', 'equipment_types.id', '=', 'equipments.equipment_type_id')
                 ->where(function ($q) use ($searchString) {
-                    $q->where(DB::raw('LOWER(th_name)'), 'like', "%{$searchString}%")
-                        ->orWhere('en_name', 'like', "%{$searchString}%")
-                        ->orWhere('id', 'like', "%{$searchString}%");
+                    $q->where(DB::raw('LOWER(equipment_types.th_name)'), 'like', "%{$searchString}%")
+                        ->orWhere(DB::raw('LOWER(equipment_types.en_name)'), 'like', "%{$searchString}%")
+                        ->orWhere('equipment_types.id', 'like', "%{$searchString}%");
+                })
+                ->where(function ($q) use ($excludedEquipmentTypeIds) {
+                    $q->whereNotIn('equipment_types.id', $excludedEquipmentTypeIds)
+                        ->orWhere(function ($q) {
+                            $q->where('equipment_types.th_name', 'จอมอนิเตอร์')
+                                ->orWhere('equipment_types.en_name', 'Monitor');
+                        });
                 })
                 ->limit(20)
-                ->orderBy('id', 'asc')
-                ->get(['id', 'th_name', 'en_name'])
+                ->orderBy('equipment_types.id', 'asc')
+                ->get(['equipment_types.id', 'equipment_types.th_name', 'equipment_types.en_name'])
         ]);
     }
 
@@ -137,7 +151,11 @@ class UserEquipmentController extends Controller
 
     public function equipment_list_edit(Request $request, $id): \Illuminate\Contracts\View\Factory|View|Application
     {
-        $equipment = Equipments::find($id);
+        $equipment = Equipments::query()->where('equipments.id', $id)
+            ->leftJoin('equipment_types', 'equipment_types.id', '=', 'equipments.equipment_type_id')
+            ->select('equipments.*', 'equipment_types.th_name', 'equipment_types.en_name')
+            ->first();
+//        dd($equipment);
         return view('user.equipment.form', compact('equipment'));
     }
 
@@ -160,4 +178,12 @@ class UserEquipmentController extends Controller
 //    {
 //        return view('user.equipment.user-list');
 //    }
+
+    public function equipment_destroy($id): JsonResponse
+    {
+        $equipment = Equipments::findOrFail($id);
+        $equipment->delete();
+
+        return response()->json(['success' => true]);
+    }
 }

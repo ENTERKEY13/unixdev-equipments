@@ -7,6 +7,31 @@
 @endpush
 @push('js')
     <script>
+        function onDelete(id) {
+            swalConfirmDelete('ต้องการลบข้อมูล', function() {
+                $.ajax({
+                    url: '{{ route("user.unix.equipment_destroy", ["id" => ":id"]) }}'.replace(':id', id),
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(res) {
+                        if (res.success) {
+                            swalSuccess('ลบสำเร็จ').then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            swalError(res.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        swalError('เกิดข้อผิดพลาดในการลบ');
+                    }
+                });
+            });
+            return false;
+        }
     </script>
 @endpush
 
@@ -24,9 +49,14 @@
                         <div class="card-header d-flex justify-content-between">
                             <div>{{ $loop->iteration }}. {{ $item->equipment_th_name }} : {{ $item->equipment_en_name }}</div>
 {{--                            <div class="text-end">{{ $item->created_at->format('d/m/Y H:i') }}</div>--}}
-                            <a href="{{ route('user.unix.equipment_list_edit', ['id' => $item->id]) }}" class="text-end">
-                                <i class="fas fa-edit" style="color: grey;"></i>
-                            </a>
+                            <div class="d-flex gap-3">
+                                <a onclick="onDelete({{$item->id}})" class="text-end">
+                                    <i class="fas fa-trash" style="color: grey;"></i>
+                                </a>
+                                <a href="{{ route('user.unix.equipment_list_edit', ['id' => $item->id]) }}" class="text-end">
+                                    <i class="fas fa-edit" style="color: grey;"></i>
+                                </a>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-between p-3">
                             <div>{{ $item->name }}</div>

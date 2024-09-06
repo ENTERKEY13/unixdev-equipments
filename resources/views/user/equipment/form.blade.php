@@ -42,7 +42,8 @@
                         equipment_type_id: '{{ isset($equipment) ? $equipment->equipment_type_id : '' }}',
                         name: '{{ isset($equipment) ? $equipment->name : '' }}',
                         price: '{{ isset($equipment) ? $equipment->price : '' }}',
-                        amount: '{{ isset($equipment) ? $equipment->amount : '' }}',
+                        amount: '{{ isset($equipment) ? $equipment->amount : '1' }}',
+                        th_name: '{{ isset($equipment) ? $equipment->th_name : '' }}',
                         errors: {},
                     }
                 },
@@ -68,8 +69,7 @@
                                 }),
                                 cache: true
                             },
-                            minimumInputLength: 1,
-                            placeholder: 'เลือกประเภทอุปกรณ์',
+                            placeholder: "เลือกประเภทอุปกรณ์",
                             allowClear: true,
                             dropdownCssClass: 'custom-dropdown',
                             templateResult: (data) => {
@@ -143,13 +143,20 @@
             <div class="card-body bg-white">
                 <div class="p-3">
                     <div class="d-flex flex-column gap-3">
-                        <div class="d-flex flex-column gap-2">
-                            <div>ประเภทอุปกรณ์</div>
-                            <select style="width: 100%;" ref="equipment_type_select" v-model="equipment_type_id"></select>
-                            <div v-for="error in errors.equipment_type_id ?? []" class="alert alert-danger p-2 mt-2">
-                                @{{ error }}
+                        @if(isset($equipment))
+                            <div class="d-flex flex-column gap-2">
+                                <div>ประเภทอุปกรณ์</div>
+                                <div class="form-control" style="background: lightgray;">@{{this.th_name}} : @{{this.th_name}}</div>
                             </div>
-                        </div>
+                        @else
+                            <div class="d-flex flex-column gap-2">
+                                <div>ประเภทอุปกรณ์</div>
+                                <select style="width: 100%;" ref="equipment_type_select" v-model="equipment_type_id"></select>
+                                <div v-for="error in errors.equipment_type_id ?? []" class="alert alert-danger p-2 mt-2">
+                                    @{{ error }}
+                                </div>
+                            </div>
+                        @endif
                         <div class="d-flex flex-column gap-2">
                             <div>ชื่อยี่ห้อ/รุ่น</div>
                             <input class="form-control" type="text" placeholder="name" v-model="name">
@@ -185,7 +192,6 @@
                     @else
                         <div class="btn btn-primary w-100" @click="submit">เพิ่ม</div>
                     @endif
-
                 </div>
             </div>
         </div>

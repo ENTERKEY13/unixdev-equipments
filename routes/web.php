@@ -33,7 +33,7 @@ Route::prefix('user/unix')->as('user.unix.')->group(function () {
     Route::get('/equipment-list', [UserEquipmentController::class, 'equipment_list'])->name('equipment_list');
     Route::get('/equipment-list-edit/{id}', [UserEquipmentController::class, 'equipment_list_edit'])->name('equipment_list_edit');
     Route::put('/equipment-list-update/{id}', [UserEquipmentController::class, 'equipment_list_update'])->name('equipment_list_update');
-
+    Route::delete('/equipment-list-delete/{id}', [UserEquipmentController::class, 'equipment_destroy'])->name('equipment_destroy');
     //    Route::get('/user-equipment-list', [UserEquipmentController::class, 'user_equipment_list'])->name('user_equipment_list');
     //    Route::get('/equipment-data', [UserEquipmentController::class, 'equipment_data'])->name('equipment_data');
 });
