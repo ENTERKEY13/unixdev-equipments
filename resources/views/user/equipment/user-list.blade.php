@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 @include('lib.sweetalert')
 @include('lib.vue')
 @include('lib.datatable')
@@ -14,7 +14,7 @@
                 searchDelay: 450,
                 dom: '<"top"f>rt<"bottom"lp><"bottom"i><"clear">',
                 ajax: {
-                    url: "{{ route('user.unix.equipment_data') }}",
+                    url: "{{ route('staff.equipment_data') }}",
                     type: 'GET', // Ensure the correct method (GET or POST) is used
                     data: function(d) {
                         d._token = '{{ csrf_token() }}'; // Pass the CSRF token here

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,23 +16,23 @@ class CreateUsersTable extends Migration
 
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->boolean('is_admin')->default(1);
+            $table->boolean('is_admin')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
 
-        DB::table('users')->insert([
+        DB::table('admins')->insert([
             [
-                'name' => 'Thidarat Saeya',
-                'email' => 'thidarat@unixdev.co.th',
+                'name' => 'Admin',
+                'email' => 'admin@unixdev.co.th',
                 'password' => Hash::make('aabbccddee'),
-                'is_admin' => false,
+                'is_admin' => true,
             ]
         ]);
     }
@@ -44,6 +44,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('admins');
     }
 }

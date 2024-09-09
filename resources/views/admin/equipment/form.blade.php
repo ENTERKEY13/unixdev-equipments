@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @include('lib.vue')
 @include('lib.sweetalert')
 @push('css')
@@ -23,7 +23,7 @@
                 },
                 methods: {
                     submit() {
-                        let url = '{{ isset($equipment) ? route('admin.unix.equipment_list_update', $equipment->id) : route('admin.unix.equipment') }}';
+                        let url = '{{ isset($equipment) ? route('admin.equipment_list_update', $equipment->id) : route('admin.equipment') }}';
                         let method = '{{ isset($equipment) ? 'PUT' : 'POST' }}';
 
                         swalLoading('กำลังบันทึก');
@@ -39,7 +39,7 @@
                             success: (res) => {
                                 if (res.status === 'success') {
                                     swalSuccess('บันทึกสำเร็จ').then(() => {
-                                        window.location.href = "{{ route('admin.unix.equipment_list') }}";
+                                        window.location.href = "{{ route('admin.equipment_list') }}";
                                     });
                                 } else {
                                     this.errors = res.responseJSON.errors || {};
@@ -92,7 +92,7 @@
             <div class="card-footer d-flex justify-content-end">
                 <div class="d-flex gap-3">
                     <a class="btn btn-danger w-100"
-                       href="{{url(route('admin.unix.equipment_list'))}}">
+                       href="{{url(route('admin.equipment_list'))}}">
                         ยกเลิก
                     </a>
                     @if(isset($equipment))

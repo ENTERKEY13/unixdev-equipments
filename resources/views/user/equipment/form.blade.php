@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user.app')
 @include('lib.vue')
 @include('lib.sweetalert')
 @push('css')
@@ -54,7 +54,7 @@
                     initializeSelect() {
                         $(this.$refs.equipment_type_select).select2({
                             ajax: {
-                                url: "{{ route('user.unix.search_equipments') }}",
+                                url: "{{ route('staff.search_equipments') }}",
                                 dataType: 'json',
                                 delay: 250,
                                 data: (params) => ({
@@ -92,7 +92,7 @@
                         });
                     },
                     submit() {
-                        let url = '{{ isset($equipment) ? route('user.unix.equipment_list_update', $equipment->id) : route('user.unix.equipment') }}';
+                        let url = '{{ isset($equipment) ? route('staff.equipment_list_update', $equipment->id) : route('staff.equipment') }}';
                         let method = '{{ isset($equipment) ? 'PUT' : 'POST' }}';
 
                         swalLoading('กำลังบันทึก');
@@ -110,7 +110,7 @@
                             success: (res) => {
                                 if (res.status === 'success') {
                                     swalSuccess('บันทึกสำเร็จ').then(() => {
-                                        window.location.href = "{{ route('user.unix.equipment_list') }}";
+                                        window.location.href = "{{ route('staff.equipment_list') }}";
                                     });
                                 } else {
                                     this.errors = res.responseJSON.errors || {};
@@ -184,7 +184,7 @@
             <div class="card-footer d-flex justify-content-end">
                 <div class="d-flex gap-3">
                     <a class="btn btn-danger w-100"
-                        href="{{url(route('user.unix.equipment_list'))}}">
+                        href="{{url(route('staff.equipment_list'))}}">
                         ยกเลิก
                     </a>
                     @if(isset($equipment))

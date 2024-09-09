@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @include('lib.sweetalert')
 @include('lib.vue')
 @include('lib.datatable')
@@ -10,7 +10,7 @@
         function onDelete(id) {
             swalConfirmDelete('ต้องการลบข้อมูล', function() {
                 $.ajax({
-                    url: '{{ route("admin.unix.equipment_destroy", ["id" => ":id"]) }}'.replace(':id', id),
+                    url: '{{ route("admin.equipment_destroy", ["id" => ":id"]) }}'.replace(':id', id),
                     type: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -40,7 +40,7 @@
                 searchDelay: 450,
                 dom: '<"top"f>rt<"bottom"lp><"bottom"i><"clear">',
                 ajax: {
-                    url: "{{ route('admin.unix.equipment_data') }}",
+                    url: "{{ route('admin.equipment_data') }}",
                     type: 'GET',
                     data: function(d) {
                         d._token = '{{ csrf_token() }}';
@@ -77,7 +77,7 @@
                         searchable: false,
                         render: function (id) {
                             return '<div class="nowrap d-flex justify-content-center align-items-center gap-2">'
-                                + '<a class="btn btn-info btn-sm" href="' + '{{ route("admin.unix.equipment_list_edit", ["id" => ":id"]) }}'.replace(':id', id) + '">แก้ไข</a>'
+                                + '<a class="btn btn-info btn-sm" href="' + '{{ route("admin.equipment_list_edit", ["id" => ":id"]) }}'.replace(':id', id) + '">แก้ไข</a>'
                                 + ' <a href="javascript:;" class="btn btn-sm btn-danger" onclick="return onDelete(' + id + ')">ลบ</a>'
                                 + '</div>'
                         },
@@ -89,7 +89,7 @@
 @endpush
 
 @section('content')
-    <div id="list_announcement" class="container mt-5" style="max-width: 750px;">
+    <div id="list_announcement" class="container mt-5" style="max-width: 1000px;">
         <div class="card">
             <div class="card-header">
                 <div class="text-center">

@@ -15,7 +15,7 @@
                         @endif
 
                         {{ __('You are logged in!') }}
-                        User Login
+                        Admin Login <a href="{{url(route('admin.equipment'))}}">Equipments</a>
                     </div>
                 </div>
             </div>

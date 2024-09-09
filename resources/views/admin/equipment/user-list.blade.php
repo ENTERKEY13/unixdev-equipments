@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @include('lib.sweetalert')
 @include('lib.vue')
 @include('lib.datatable')
@@ -14,7 +14,7 @@
                 searchDelay: 450,
                 dom: '<"top"f>rt<"bottom"lp><"bottom"i><"clear">',
                 ajax: {
-                    url: "{{ route('admin.unix.user_equipment_data') }}",
+                    url: "{{ route('admin.user_equipment_data') }}",
                     type: 'GET', // Ensure the correct method (GET or POST) is used
                     data: function(d) {
                         d._token = '{{ csrf_token() }}'; // Pass the CSRF token here
@@ -64,7 +64,7 @@
 @endpush
 
 @section('content')
-    <div id="list_announcement" class="container mt-5" style="max-width: 750px;">
+    <div id="list_announcement" class="container mt-5" style="max-width: 1000px;">
         <div class="card">
             <div class="card-header">
                 <div class="text-center">

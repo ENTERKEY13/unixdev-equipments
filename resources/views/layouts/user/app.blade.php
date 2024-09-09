@@ -52,9 +52,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ route(Auth::user() && Auth::user()->is_admin ? 'admin.unix.equipment_list' : 'user.unix.equipment_list') }}">
-                    {{ config('app.name', 'UnixdevEquipment') }}
-                </a>
+{{--                <a class="navbar-brand" href="{{ route(Auth::user() && Auth::user()->is_admin ? 'admin.unix.equipment_list' : 'user.unix.equipment_list') }}">--}}
+{{--                    {{ config('app.name', 'UnixdevEquipment') }}--}}
+{{--                </a>--}}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -83,36 +83,30 @@
                         @else
                             <li class="nav-item dropdown">
                                 <div class="d-flex gap-3 align-items-center">
-                                    @if (Auth::user()->is_admin)
-                                        <a class="nav-link" href="{{ route('admin.unix.user_equipment_list') }}">
-                                            User Equipment List
-                                        </a>
-                                    @endif
-                                    <a class="nav-link" href="{{ route(Auth::user() && Auth::user()->is_admin ? 'admin.unix.equipment_list' : 'user.unix.equipment_list') }}">
+                                    <a class="nav-link" href="{{ route('staff.equipment_list') }}">
                                         Equipment List
                                     </a>
-                                    <a class="nav-link" href="{{ route(Auth::user() && Auth::user()->is_admin ? 'admin.unix.equipment' : 'user.unix.equipment') }}">
+                                    <a class="nav-link" href="{{ route('staff.equipment') }}">
                                         Equipment Form
                                     </a>
-{{--                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
                                     <div class="d-flex align-items-center">
                                         <a class="nav-link" href="#">
                                             {{ Auth::user()->name }}
                                         </a>
-                                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        <a class="nav-link" href="{{ route('staff.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             <i class="fas fa-sign-out-alt"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ route('staff.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('staff.logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
