@@ -22,9 +22,28 @@ class AdminEquipmentController extends Controller
     public function submit_equipment(Request $request): \Illuminate\Http\JsonResponse
     {
         $validatedData = $request->validate([
-            'th_name' => 'required|string',
-            'en_name' => 'required|string',
+            'th_name' => [
+                'required',
+                'string',
+                'regex:/^[\p{L}\s]+$/u',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/[\p{Thai}]/u', $value)) {
+                        $fail($attribute.' must be in Thai.');
+                    }
+                },
+            ],
+            'en_name' => [
+                'required',
+                'string',
+                'regex:/^[A-Za-z\s]+$/',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^[A-Za-z\s]+$/', $value)) {
+                        $fail($attribute.' must be in English.');
+                    }
+                },
+            ],
         ]);
+
 
         try {
             EquipmentTypes::create($validatedData);
@@ -155,8 +174,26 @@ class AdminEquipmentController extends Controller
     public function equipment_list_update(Request $request, $id): JsonResponse
     {
         $validated = $request->validate([
-            'th_name' => 'required',
-            'en_name' => 'required',
+            'th_name' => [
+                'required',
+                'string',
+                'regex:/^[\p{L}\s]+$/u',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/[\p{Thai}]/u', $value)) {
+                        $fail($attribute.' must be in Thai.');
+                    }
+                },
+            ],
+            'en_name' => [
+                'required',
+                'string',
+                'regex:/^[A-Za-z\s]+$/',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^[A-Za-z\s]+$/', $value)) {
+                        $fail($attribute.' must be in English.');
+                    }
+                },
+            ],
         ]);
 
         $equipment = EquipmentTypes::findOrFail($id);

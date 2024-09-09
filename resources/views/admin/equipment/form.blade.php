@@ -74,14 +74,14 @@
                     <div class="d-flex flex-column gap-3">
                         <div class="d-flex flex-column gap-2">
                             <div>ประเภทอุปกรณ์ (ภาษาไทย)</div>
-                            <input class="form-control" type="text" placeholder="name" v-model="th_name">
+                            <input class="form-control" type="text" placeholder="ประเภทอุปกรณ์ (ภาษาไทย)" v-model="th_name">
                             <div v-for="error in errors.th_name ?? []" class="alert alert-danger p-2 mt-2">
                                 @{{ error }}
                             </div>
                         </div>
                         <div class="d-flex flex-column gap-2">
                             <div>ประเภทอุปกรณ์ (ภาษาอังกฤษ)</div>
-                            <input class="form-control" type="text" placeholder="name" v-model="en_name">
+                            <input class="form-control" type="text" placeholder="Equipment Type" v-model="en_name">
                             <div v-for="error in errors.en_name ?? []" class="alert alert-danger p-2 mt-2">
                                 @{{ error }}
                             </div>
