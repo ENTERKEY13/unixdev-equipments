@@ -2,14 +2,14 @@
 
 use App\Http\Controllers\User\UserEquipmentController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\StaffController;
-Route::middleware(['guest:staff'])->group(function () {
-    Route::get('/',            [StaffController::class, 'StaffLoginForm'])->name('login.form');
-    Route::post('postlogin',   [StaffController::class, 'StaffLogin'])->name('login');
+use App\Http\Controllers\User\UserController;
+Route::middleware(['guest:user'])->group(function () {
+    Route::get('/',            [UserController::class, 'StaffLoginForm'])->name('login.form');
+    Route::post('postlogin',   [UserController::class, 'StaffLogin'])->name('login');
 });
-Route::middleware(['auth:staff'])->group(function () {
-    Route::get('dashboard',   [StaffController::class, 'Dashboard'])->name('dashboard');
-    Route::post('logout',      [StaffController::class, 'StaffLogout'])->name('logout');
+Route::middleware(['auth:user'])->group(function () {
+    Route::get('dashboard',   [UserController::class, 'Dashboard'])->name('dashboard');
+    Route::post('logout',      [UserController::class, 'StaffLogout'])->name('logout');
 
 //    Route::prefix('/unix')->as('unix.')->group(function () {
         Route::get('/equipment', [UserEquipmentController::class, 'equipment'])->name('equipment');

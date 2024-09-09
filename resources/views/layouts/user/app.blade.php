@@ -83,30 +83,30 @@
                         @else
                             <li class="nav-item dropdown">
                                 <div class="d-flex gap-3 align-items-center">
-                                    <a class="nav-link" href="{{ route('staff.equipment_list') }}">
+                                    <a class="nav-link" href="{{ route('user.equipment_list') }}">
                                         Equipment List
                                     </a>
-                                    <a class="nav-link" href="{{ route('staff.equipment') }}">
+                                    <a class="nav-link" href="{{ route('user.equipment') }}">
                                         Equipment Form
                                     </a>
                                     <div class="d-flex align-items-center">
                                         <a class="nav-link" href="#">
                                             {{ Auth::user()->name }}
                                         </a>
-                                        <a class="nav-link" href="{{ route('staff.logout') }}" onclick="event.preventDefault();
+                                        <a class="nav-link" href="{{ route('user.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             <i class="fas fa-sign-out-alt"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('staff.logout') }}"
+                                    <a class="dropdown-item" href="{{ route('user.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('staff.logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>

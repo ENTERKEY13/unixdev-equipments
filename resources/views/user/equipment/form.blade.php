@@ -54,7 +54,7 @@
                     initializeSelect() {
                         $(this.$refs.equipment_type_select).select2({
                             ajax: {
-                                url: "{{ route('staff.search_equipments') }}",
+                                url: "{{ route('user.search_equipments') }}",
                                 dataType: 'json',
                                 delay: 250,
                                 data: (params) => ({
@@ -92,7 +92,7 @@
                         });
                     },
                     submit() {
-                        let url = '{{ isset($equipment) ? route('staff.equipment_list_update', $equipment->id) : route('staff.equipment') }}';
+                        let url = '{{ isset($equipment) ? route('user.equipment_list_update', $equipment->id) : route('user.equipment') }}';
                         let method = '{{ isset($equipment) ? 'PUT' : 'POST' }}';
 
                         swalLoading('กำลังบันทึก');
@@ -110,7 +110,7 @@
                             success: (res) => {
                                 if (res.status === 'success') {
                                     swalSuccess('บันทึกสำเร็จ').then(() => {
-                                        window.location.href = "{{ route('staff.equipment_list') }}";
+                                        window.location.href = "{{ route('user.equipment_list') }}";
                                     });
                                 } else {
                                     this.errors = res.responseJSON.errors || {};
@@ -184,7 +184,7 @@
             <div class="card-footer d-flex justify-content-end">
                 <div class="d-flex gap-3">
                     <a class="btn btn-danger w-100"
-                        href="{{url(route('staff.equipment_list'))}}">
+                        href="{{url(route('user.equipment_list'))}}">
                         ยกเลิก
                     </a>
                     @if(isset($equipment))

@@ -14,7 +14,7 @@
                 searchDelay: 450,
                 dom: '<"top"f>rt<"bottom"lp><"bottom"i><"clear">',
                 ajax: {
-                    url: "{{ route('staff.equipment_data') }}",
+                    url: "{{ route('user.equipment_data') }}",
                     type: 'GET', // Ensure the correct method (GET or POST) is used
                     data: function(d) {
                         d._token = '{{ csrf_token() }}'; // Pass the CSRF token here

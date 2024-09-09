@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('user.auth.login');
-//});
+Route::get('/', function () {
+    return view('user.auth.login');
+});
 //
 //Auth::routes();
 //

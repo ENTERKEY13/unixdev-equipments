@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-class StaffController extends Controller
+class UserController extends Controller
 {
     public function StaffLoginForm()
     {
@@ -14,8 +14,8 @@ class StaffController extends Controller
     public function StaffLogin(Request $request)
     {
         $credential = $request->only(['email', 'password']);
-        if (Auth::guard('staff')->attempt($credential, $request->filled('remember'))) {
-            return redirect()->route('staff.dashboard');
+        if (Auth::guard('user')->attempt($credential, $request->filled('remember'))) {
+            return redirect()->route('user.dashboard');
         } else {
             throw ValidationException::withMessages([
                 'email' => 'invalid email or password'
@@ -24,8 +24,8 @@ class StaffController extends Controller
     }
     public function StaffLogout()
     {
-        Auth::guard('staff')->logout();
-        return redirect(route('staff.login.form'));
+        Auth::guard('user')->logout();
+        return redirect(route('user.login.form'));
     }
 
     public function Dashboard()

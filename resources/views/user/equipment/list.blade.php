@@ -10,7 +10,7 @@
         function onDelete(id) {
             swalConfirmDelete('ต้องการลบข้อมูล', function() {
                 $.ajax({
-                    url: '{{ route("staff.equipment_destroy", ["id" => ":id"]) }}'.replace(':id', id),
+                    url: '{{ route("user.equipment_destroy", ["id" => ":id"]) }}'.replace(':id', id),
                     type: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -53,7 +53,7 @@
                                 <a onclick="onDelete({{$item->id}})" class="text-end">
                                     <i class="fas fa-trash" style="color: grey;"></i>
                                 </a>
-                                <a href="{{ route('staff.equipment_list_edit', ['id' => $item->id]) }}" class="text-end">
+                                <a href="{{ route('user.equipment_list_edit', ['id' => $item->id]) }}" class="text-end">
                                     <i class="fas fa-edit" style="color: grey;"></i>
                                 </a>
                             </div>

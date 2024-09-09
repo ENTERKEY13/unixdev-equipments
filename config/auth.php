@@ -53,13 +53,13 @@ return [
             'provider' => 'admins',
             'hash' => false,
         ],
-        'staff' => [
+        'user' => [
             'driver' => 'session',
-            'provider' => 'staffs',
+            'provider' => 'users',
         ],
-        'staff-api' => [
+        'user-api' => [
             'driver' => 'token',
-            'provider' => 'staffs',
+            'provider' => 'users',
             'hash' => false,
         ],
     ],
@@ -80,15 +80,11 @@ return [
     |
     */
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => User::class,
-        ],
         'admins' => [
             'driver' => 'eloquent',
             'model' => Admin::class,
         ],
-        'staffs' => [
+        'users' => [
             'driver' => 'eloquent',
             'model' => User::class,
         ],
@@ -112,20 +108,14 @@ return [
     |
     */
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
         'admins' => [
             'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
-        'staffs' => [
-            'provider' => 'staffs',
+        'users' => [
+            'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
